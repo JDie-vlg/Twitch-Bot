@@ -1,6 +1,6 @@
 {
   "name": "twitch-service",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "electron/main.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "appId": "com.jdie.twitchbot",
     "productName": "Twitch BOT",
     "directories": {
-      "output": "dist"
+      "output": "release"
     },
     "publish": {
       "provider": "github",
@@ -22,11 +22,14 @@
       "repo": "Twitch-Bot",
       "releaseType": "release"
     },
+    "mac": {
+      "target": ["dmg", "zip"]
+    },
     "win": {
-      "target": "nsis"
+      "target": ["nsis", "zip"]
     },
     "linux": {
-      "target": "AppImage"
+      "target": ["AppImage", "tar.gz"]
     },
     "nsis": {
       "artifactName": "${productName}-Setup-${version}.${ext}",
