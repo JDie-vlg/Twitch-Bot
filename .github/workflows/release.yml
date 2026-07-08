@@ -1,4 +1,4 @@
-name: Build and Release Electron APP
+name: Release
 
 on:
   push:
@@ -6,43 +6,50 @@ on:
       - 'v*'
 
 jobs:
-  build:
-    name: Build (${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
 
-    strategy:
-      matrix:
-        os:
-          - macos-latest
-          - ubuntu-latest
-          - windows-latest
+  windows:
+    runs-on: windows-latest
+
+    permissions:
+      contents: write
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
         with:
           node-version: '24'
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
-      - name: Build and Release
+      - name: Build & Publish
         run: npm run release
+        env:
+          GH_TOKEN: ${{ github.token }}
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v7
+  mac:
+    needs: windows
+
+    runs-on: macos-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
         with:
-          name: release-${{ matrix.os }}
-          path: release/*
-          if-no-files-found: error
+          node-version: '24'
 
-  publish:
-    name: Publish GitHub Release
+      - run: npm ci
 
-    needs: build
+      - name: Build & Publish
+        run: npm run release
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  linux:
+    needs: windows
 
     runs-on: ubuntu-latest
 
@@ -50,18 +57,15 @@ jobs:
       contents: write
 
     steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v8
-        with:
-          path: artifacts
+      - uses: actions/checkout@v7
 
-      - name: Show downloaded files
-        run: |
-          ls -R artifacts
-
-      - name: Publish Release
-        uses: softprops/action-gh-release@v3
+      - uses: actions/setup-node@v6
         with:
-          files: artifacts/**/*
-          draft: false
-          generate_release_notes: true
+          node-version: '24'
+
+      - run: npm ci
+
+      - name: Build & Publish
+        run: npm run release
+        env:
+          GH_TOKEN: ${{ github.token }}

@@ -8,7 +8,7 @@
     "dev": "electron . --dev",
     "build": "electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "electron-builder --publish never"
+    "release": "electron-builder --publish always"
   },
   "build": {
     "appId": "com.jdie.twitchbot",
