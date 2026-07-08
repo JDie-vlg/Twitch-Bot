@@ -1,0 +1,93 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log*
+
+# Production
+release/
+dist/
+build/
+out/
+*.asar
+*.asar.unpacked/
+
+# Electron
+.electron-cache/
+.electron-builder-cache/
+electron-builder.env
+.electron-builder.json
+
+# Нативные модули (собранные под конкретную версию Node)
+*.node
+*.dll
+*.so
+*.dylib
+.node-gyp/
+build/Release/
+build/Debug/
+
+# Executables (результаты сборки)
+*.exe
+*.msi
+*.dmg
+*.pkg
+*.AppImage
+*.deb
+*.rpm
+*.tar.gz
+*.zip
+*.7z
+
+# Env файлы
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.iml
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+desktop.ini
+*.bak
+
+# Логи
+logs/
+*.log
+*.tmp
+*.temp
+
+# Тесты и покрытие
+coverage/
+.nyc_output/
+*.test.js
+*.spec.js
+
+# Другое
+.cache/
+.temp/
+.tmp/
+*.min.js
+*.min.css
+
+# Ваши специфичные файлы (если есть)
+config.local.json
+*.secret.*
+*.private.*
