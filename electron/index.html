@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>Twitch BOT</title>
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../node_modules/bootstrap-icons/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+
+<div class="conteiner">
+
+  <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Главная</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-twitch-tab" data-bs-toggle="pill" data-bs-target="#pills-twitch" type="button" role="tab" aria-controls="pills-twitch" aria-selected="false">TWITCH</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-donation_alerts-tab" data-bs-toggle="pill" data-bs-target="#pills-donation_alerts" type="button" role="tab" aria-controls="pills-donation_alerts" aria-selected="false">DONATION ALERTS</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="pills-telegram-tab" data-bs-toggle="pill" data-bs-target="#pills-telegram" type="button" role="tab" aria-controls="pills-telegram" aria-selected="false">TELEGRAM</button>
+    </li>
+  </ul>
+
+  <hr class="separator" aria-hidden="true">
+  <div class="wrapper-container">
+
+    <div class="overlay-wrapper">
+      <span>Coming Soon</span>
+    </div>
+
+    <div class="tab-content" id="pills-tabContent">
+
+      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="twitch-block">
+<!--          <h2>Главная</h2>-->
+<!--          <h2>V0.1.0</h2>-->
+          <div>
+            <form>
+              <div class="select-wrapper">
+                <span class="label">⚙️ Настройка бота</span>
+                <label>
+                  <select id="botSelect">
+                      <option selected>Выберите вариант запуска бота</option>
+                      <option id="twitch" value="twitch">🎮 Twitch</option>
+                      <option id="donationalerts" value="donationalerts" disabled>🎮 Twitch + 💰 Donation Alerts</option>
+                      <option id="telegram" value="telegram" disabled>🎮 Twitch + 💰 Donation Alerts + 📱 Telegram</option>
+                  </select>
+                </label>
+              </div>
+              <button type="button" id="startBtn" class="home-btn btn btn-success">
+                Запустить бота
+              </button>
+              <button type="button" id="stopBtn" class="btn btn-danger">
+                Остановить бота
+              </button>
+            </form>
+            <div id="status"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade show" id="pills-twitch" role="tabpanel" aria-labelledby="pills-twitch-tab">
+
+        <div class="twitch-block">
+          <h2>TWITCH</h2>
+          <div>
+<!--            <form>-->
+              <div class="twitch-client_id mb-3 row">
+                <label for="inputTwitchClientID" class="col-12 col-md-6 col-lg-4 col-form-label">Client ID</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputTwitchClientID">
+                </div>
+              </div>
+              <div class="twitch-client_secret mb-3 row">
+                <label for="inputTwitchClientSecret" class="col-12 col-md-6 col-lg-4 col-form-label">Client Secret</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputTwitchClientSecret">
+                </div>
+              </div>
+              <div class="twitch-channel_name mb-3 row">
+                <label for="inputTwitchChannelName" class="col-12 col-md-6 col-lg-4 col-form-label">Имя канала </label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputTwitchChannelName">
+                </div>
+              </div>
+              <button type="button" id="twitch-btn" class="twitch-btn btn btn-success">Сохранить</button>
+<!--            </form>-->
+          </div>
+        </div>
+
+        <div class="twitch-option-block">
+          <h2>Настройки Twitch</h2>
+
+          <div class="donation_alerts_message-container">
+            <form>
+              <div>
+                <lable>Сообщение, которое будет выводиться в чат при донате</lable>
+                <div>
+                  <textarea id="donation-message" placeholder="Временно недоступно" disabled></textarea>
+                </div>
+              </div>
+              <button type="button" class="twitch-command-btn btn btn-success" disabled>Сохранить</button>
+            </form>
+          </div>
+
+          <div class="command-container">
+              <div class="fields-row">
+                <div class="field-group">
+                  <lable>Команды</lable>
+                  <input id="twitchCommand">
+                </div>
+                <div class="field-group">
+                  <lable">Сообщение</lable>
+                  <textarea id="command-text" name="command-text" rows="2" maxlength="500"></textarea>
+                </div>
+              </div>
+              <button type="button" id="twitch-command-btn" class="twitch-command-btn btn btn-success">Сохранить</button>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="tab-pane fade" id="pills-donation_alerts" role="tabpanel" aria-labelledby="pills-donation_alerts-tab">
+        <div class="donation_alerts-block">
+          <h2>DONATION ALERTS</h2>
+          <div>
+            <form>
+              <div class="donation_alerts-client_id mb-3 row">
+                <label for="inputDonationAlertsClientID" class="col-12 col-md-6 col-lg-4 col-form-label">Client ID</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputDonationAlertsClientID">
+                </div>
+              </div>
+              <div class="donation_alerts-client_secret mb-3 row">
+                <label for="inputDonationAlertsClientSecret" class="col-12 col-md-6 col-lg-4 col-form-label">Client Secret</label>
+                <div class="col-sm-10">
+                  <input type="password" class="form-control" id="inputDonationAlertsClientSecret">
+                </div>
+              </div>
+              <button class="donation_alerts-btn btn btn-success">Сохранить</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="pills-telegram" role="tabpanel" aria-labelledby="pills-telegram-tab">
+        <div class="telegram-block">
+          <h2>TELEGRAM</h2>
+          <div>
+            <form>
+              <div class="telegram-api_key mb-3 row">
+                <label for="ApiKey" class="col-12 col-md-6 col-lg-4 col-form-label">API Key</label>
+                <div class="api_key-wrapper col-sm-10">
+                  <input type="password" class="form-control" id="ApiKey">
+                </div>
+              </div>
+
+              <button class="telegram-btn btn btn-success">Сохранить</button>
+            </form>
+
+              <div class="telegram_message-container">
+                <form>
+                  <div>
+                    <lable>Сообщение, которое будет выводиться в Telegram</lable>
+                    <div>
+                      <textarea id="telegram-message"></textarea>
+                    </div>
+                  </div>
+                  <button class="telegram-btn btn btn-success">Сохранить</button>
+                </form>
+              </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <script src="../utils/block-tabs.js"></script>
+
+  <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>
