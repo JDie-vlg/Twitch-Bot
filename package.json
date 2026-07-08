@@ -1,6 +1,6 @@
 {
   "name": "twitch-service",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "main": "electron/main.js",
   "scripts": {
